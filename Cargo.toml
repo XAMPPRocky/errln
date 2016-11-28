@@ -1,0 +1,9 @@
+[package]
+authors = ["Aaronepower <theaaronepower@gmail.com>"]
+description = "Utility macros to write to stderr"
+homepage  = "https://github.com/Aaronepower/errln"
+license = "MIT/Apache-2.0"
+name = "errln"
+readme = "README.md"
+repository = "https://github.com/Aaronepower/errln.git"
+version = "0.1.0"
