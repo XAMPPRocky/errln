@@ -65,10 +65,12 @@ macro_rules! err {
 ///
 /// errln!("hello there!");
 /// errln!("format {} arguments", "some");
+/// errln!();
 /// # }
 /// ```
 #[macro_export]
 macro_rules! errln {
+    () => {err!("\n")};
     ($fmt:expr) => (err!(concat!($fmt, "\n")));
     ($fmt:expr, $($arg:tt)*) => (err!(concat!($fmt, "\n"), $($arg)*));
 }
