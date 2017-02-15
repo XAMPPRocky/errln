@@ -7,9 +7,8 @@
 /// necessary to use `io::stderr().flush()` to ensure the output is emitted
 /// immediately.
 ///
-/// # Panics
-///
-/// Panics if writing to `io::stderr()` fails.
+/// If writing to stderr fails, there is usually not much you should
+/// do about it, so all I/O-errors are ignored.
 ///
 /// # Examples
 ///
@@ -29,18 +28,18 @@
 /// err!("same ");
 /// err!("line ");
 ///
-/// io::stderr().flush().unwrap();
+/// io::stderr().flush();
 ///
 /// err!("this string has a newline, why not choose errln! instead?\n");
 ///
-/// io::stderr().flush().unwrap();
+/// io::stderr().flush();
 /// # }
 /// ```
 #[macro_export]
 macro_rules! err {
     ($($arg:tt)*) => {{
         use std::io::Write;
-        write!(&mut ::std::io::stderr(), $($arg)*).unwrap()
+        let _ = write!(&mut ::std::io::stderr(), $($arg)*);
     }};
 }
 
@@ -51,9 +50,8 @@ macro_rules! err {
 /// Use the `format!` syntax to write data to the standard output.
 /// See `std::fmt` for more information.
 ///
-/// # Panics
-///
-/// Panics if writing to `io::stderr()` fails.
+/// If writing to stderr fails, there is usually not much you should
+/// do about it, so all I/O-errors are ignored.
 ///
 /// # Examples
 ///
