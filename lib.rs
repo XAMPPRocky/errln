@@ -1,3 +1,21 @@
+//! Two convenience macros for writing to `stderr`.
+//!
+//! # Examples
+//!
+//! ```no_run
+//! #[macro_use]
+//! extern crate errln;
+//!
+//! use std::{env,process};
+//!
+//! fn main() {
+//!    if env::args_os().len() <= 1 {
+//!        errln!("This program doesn't take any arguments or options.");
+//!        process::exit(1);
+//!    }
+//! }
+//! ```
+
 /// Macro for printing to the standard error.
 ///
 /// Equivalent to the `errln!` macro except that a newline is not printed at
