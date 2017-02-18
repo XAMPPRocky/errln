@@ -17,7 +17,6 @@
 /// extern crate errln;
 ///
 /// # fn main() {
-///
 /// use std::io::{self, Write};
 ///
 /// err!("this ");
@@ -60,7 +59,6 @@ macro_rules! err {
 /// extern crate errln;
 ///
 /// # fn main() {
-///
 /// errln!("hello there!");
 /// errln!("format {} arguments", "some");
 /// errln!();
