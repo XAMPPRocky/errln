@@ -60,11 +60,11 @@ macro_rules! err {
     }};
 }
 
-/// Macro for printing to the standard err, with a newline. On all
-/// platforms, the newline is the LINE FEED character (`\n`/`U+000A`) alone
-/// (no additional CARRIAGE RETURN (`\r`/`U+000D`).
+/// Macro for printing to the standard error, with a newline.
 ///
-/// Use the `format!` syntax to write data to the standard output.
+/// On all platforms, the newline is the LINE FEED character (`\n`/`U+000A`)
+/// alone (no additional CARRIAGE RETURN (`\r`/`U+000D`).  
+/// Use the `format!` syntax to write data to the standard error.
 /// See `std::fmt` for more information.
 ///
 /// If writing to stderr fails, there is usually not much you should
