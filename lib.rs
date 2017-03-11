@@ -1,3 +1,21 @@
+//! Two convenience macros for writing to `stderr`.
+//!
+//! # Examples
+//!
+//! ```no_run
+//! #[macro_use]
+//! extern crate errln;
+//!
+//! use std::{env,process};
+//!
+//! fn main() {
+//!    if env::args_os().len() <= 1 {
+//!        errln!("This program doesn't take any arguments or options.");
+//!        process::exit(1);
+//!    }
+//! }
+//! ```
+
 /// Macro for printing to the standard error.
 ///
 /// Equivalent to the `errln!` macro except that a newline is not printed at
@@ -7,9 +25,8 @@
 /// necessary to use `io::stderr().flush()` to ensure the output is emitted
 /// immediately.
 ///
-/// # Panics
-///
-/// Panics if writing to `io::stderr()` fails.
+/// If writing to stderr fails, there is usually not much you should
+/// do about it, so all I/O-errors are ignored.
 ///
 /// # Examples
 ///
@@ -18,7 +35,6 @@
 /// extern crate errln;
 ///
 /// # fn main() {
-///
 /// use std::io::{self, Write};
 ///
 /// err!("this ");
@@ -29,31 +45,30 @@
 /// err!("same ");
 /// err!("line ");
 ///
-/// io::stderr().flush().unwrap();
+/// io::stderr().flush();
 ///
 /// err!("this string has a newline, why not choose errln! instead?\n");
 ///
-/// io::stderr().flush().unwrap();
+/// io::stderr().flush();
 /// # }
 /// ```
 #[macro_export]
 macro_rules! err {
     ($($arg:tt)*) => {{
         use std::io::Write;
-        write!(&mut ::std::io::stderr(), $($arg)*).unwrap()
+        let _ = write!(&mut ::std::io::stderr(), $($arg)*);
     }};
 }
 
-/// Macro for printing to the standard err, with a newline. On all
-/// platforms, the newline is the LINE FEED character (`\n`/`U+000A`) alone
-/// (no additional CARRIAGE RETURN (`\r`/`U+000D`).
+/// Macro for printing to the standard error, with a newline.
 ///
-/// Use the `format!` syntax to write data to the standard output.
+/// On all platforms, the newline is the LINE FEED character (`\n`/`U+000A`)
+/// alone (no additional CARRIAGE RETURN (`\r`/`U+000D`).  
+/// Use the `format!` syntax to write data to the standard error.
 /// See `std::fmt` for more information.
 ///
-/// # Panics
-///
-/// Panics if writing to `io::stderr()` fails.
+/// If writing to stderr fails, there is usually not much you should
+/// do about it, so all I/O-errors are ignored.
 ///
 /// # Examples
 ///
@@ -62,13 +77,14 @@ macro_rules! err {
 /// extern crate errln;
 ///
 /// # fn main() {
-///
 /// errln!("hello there!");
 /// errln!("format {} arguments", "some");
+/// errln!();
 /// # }
 /// ```
 #[macro_export]
 macro_rules! errln {
+    () => {err!("\n")};
     ($fmt:expr) => (err!(concat!($fmt, "\n")));
     ($fmt:expr, $($arg:tt)*) => (err!(concat!($fmt, "\n"), $($arg)*));
 }
